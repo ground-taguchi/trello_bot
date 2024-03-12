@@ -3,10 +3,10 @@ var trelloApiKey = '';
 var trelloToken = '';
 
 // Line Notifyトークン
-var lineNotifyToken = '';
+var lineNotifyToken = 'MLGr6MBNqnWyxLzvdZDP9lRdSIPg2MT2gcjpcKELX3z';
 
 // TrelloボードID
-var trelloBoardId = '';
+var trelloBoardId = 'lq5PkaRj';
 
 function main() {
   var cards = getNearDueDateCards();
@@ -30,14 +30,14 @@ function getNearDueDateCards() {
   var response = UrlFetchApp.fetch(url);
   var cards = JSON.parse(response.getContentText());
 
-  // 期限が2日以内かつ未完了のカードを抽出
+  // 期限が1日以内かつ未完了のカードを抽出
   var nearDueDateCards = cards.filter(function(card) {
     if (!card.dueComplete) {
       var dueDate = formatDateTime(card.due);
       var today = new Date();
       var timeDiff = new Date(dueDate).getTime() - today.getTime();
       var daysDiff = timeDiff / (1000 * 3600 * 24);
-      return daysDiff <= 2 && daysDiff > 0;  // 2日以内かつ非負の場合
+      return daysDiff <= 1 && daysDiff > 0;  // 2日以内かつ非負の場合
     } else {
       return false; // 完了済みのカードは除外
     }
@@ -61,12 +61,12 @@ function getMemberNames(card) {
 }
 
 function sendLineNotification(cards) {
-  var message = '\n期限が近づいてるよ！\n進捗教えてー！\n\n';
+  var message = '\n期限が近づいてるよ！\n進捗教えて！\n\n';
 
   cards.forEach(function(card) {
     var formattedDueDateTime = formatDateTime(card.due);
     var memberNames = getMemberNames(card);
-    message += '「' + card.name + '」\n' + '担当者:' + memberNames +   '\n期限: ' + formattedDueDateTime + 'まで\n\n';
+    message += '「' + card.name + '」\n' + '担当者： ' + memberNames +   '\n期限： ' + formattedDueDateTime + 'まで\n\n';
   });
 
   var lineUrl = 'https://notify-api.line.me/api/notify';
