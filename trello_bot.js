@@ -3,10 +3,10 @@ var trelloApiKey = '';
 var trelloToken = '';
 
 // Line Notifyトークン
-var lineNotifyToken = 'MLGr6MBNqnWyxLzvdZDP9lRdSIPg2MT2gcjpcKELX3z';
+var lineNotifyToken = '';
 
 // TrelloボードID
-var trelloBoardId = 'lq5PkaRj';
+var trelloBoardId = '';
 
 function main() {
   var cards = getNearDueDateCards();
